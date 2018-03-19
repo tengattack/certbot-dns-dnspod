@@ -16,7 +16,7 @@ Install
 
     git clone https://github.com/tengattack/certbot-dns-dnspod
     cd certbot-dns-dnspod
-    sudo python setup install
+    sudo python setup.py install
 
 
 Credentials File
@@ -24,8 +24,8 @@ Credentials File
 
 .. code-block:: ini
 
-    certbot_dns_dnspod:dns_dnspod_api_id: 12345
-    certbot_dns_dnspod:dns_dnspod_api_token: 1234567890abcdef1234567890abcdef
+    certbot_dns_dnspod:dns_dnspod_api_id = 12345
+    certbot_dns_dnspod:dns_dnspod_api_token = 1234567890abcdef1234567890abcdef
 
 .. code-block:: bash
 
