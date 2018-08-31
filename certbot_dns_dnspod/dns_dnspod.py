@@ -81,3 +81,8 @@ class _DNSPodLexiconClient(dns_common_lexicon.LexiconClient):
             hint = 'Are your API ID and API Token values correct?'
             return errors.PluginError('Error determining zone identifier for {0}: {1}.{2}'
                                   .format(domain_name, e, ' ({0})'.format(hint) if hint else ''))
+
+    def _handle_general_error(self, e, domain_name):
+        if not str(e).startswith('Domain name invalid'):
+            return errors.PluginError('Unexpected error determining zone identifier for {0}: {1}'
+                                      .format(domain_name, e))
