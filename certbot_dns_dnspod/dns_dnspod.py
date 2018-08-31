@@ -3,7 +3,6 @@ import logging
 
 import zope.interface
 from lexicon.providers import dnspod
-from tld import get_tld
 
 from certbot import errors
 from certbot import interfaces
@@ -51,12 +50,10 @@ class Authenticator(dns_common.DNSAuthenticator):
         )
 
     def _perform(self, domain, validation_name, validation):
-        tld_domain = get_tld(domain, fix_protocol=True)
-        self._get_dnspod_client().add_txt_record(tld_domain, validation_name, validation)
+        self._get_dnspod_client().add_txt_record(domain, validation_name, validation)
 
     def _cleanup(self, domain, validation_name, validation):
-        tld_domain = get_tld(domain, fix_protocol=True)
-        self._get_dnspod_client().del_txt_record(tld_domain, validation_name, validation)
+        self._get_dnspod_client().del_txt_record(domain, validation_name, validation)
 
     def _get_dnspod_client(self):
         return _DNSPodLexiconClient(self.credentials.conf('api-id'),
@@ -82,6 +79,5 @@ class _DNSPodLexiconClient(dns_common_lexicon.LexiconClient):
         hint = None
         if str(e).startswith('400 Client Error:'):
             hint = 'Are your API ID and API Token values correct?'
-
-        return errors.PluginError('Error determining zone identifier for {0}: {1}.{2}'
+            return errors.PluginError('Error determining zone identifier for {0}: {1}.{2}'
                                   .format(domain_name, e, ' ({0})'.format(hint) if hint else ''))
