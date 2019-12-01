@@ -2,6 +2,8 @@
 import logging
 
 import zope.interface
+
+from requests.exceptions import HTTPError
 from lexicon.providers import dnspod
 
 from certbot import errors
@@ -74,6 +76,44 @@ class _DNSPodLexiconClient(dns_common_lexicon.LexiconClient):
             'auth_token': api_token,
             'ttl': ttl,
         })
+
+    def _find_domain_id(self, domain):
+        """
+        Find the domain_id for a given domain.
+        Rewrite certbot/plugins/dns_common_lexicon.py to ensure compatibility
+        for Lexicon 2.x and 3.x
+
+        :param str domain: The domain for which to find the domain_id.
+        :raises errors.PluginError: if the domain_id cannot be found.
+        """
+
+        domain_name_guesses = dns_common.base_domain_name_guesses(domain)
+
+        for domain_name in domain_name_guesses:
+            try:
+                if hasattr(self.provider, 'options'):
+                    # For Lexicon 2.x
+                    self.provider.options['domain'] = domain_name
+                else:
+                    # For Lexicon 3.x
+                    self.provider.domain = domain_name
+
+                self.provider.authenticate()
+
+                return  # If `authenticate` doesn't throw an exception, we've found the right name
+            except HTTPError as e:
+                result = self._handle_http_error(e, domain_name)
+
+                if result:
+                    raise result
+            except Exception as e:  # pylint: disable=broad-except
+                result = self._handle_general_error(e, domain_name)
+
+                if result:
+                    raise result
+
+        raise errors.PluginError('Unable to determine zone identifier for {0} using zone names: {1}'
+                                 .format(domain, domain_name_guesses))
 
     def _handle_http_error(self, e, domain_name):
         hint = None
