@@ -24,10 +24,11 @@ virtualenv --no-site-packages --python "python2.7" "/opt/eff.org/certbot/venv"
 ```
 
 ## Credentials File
+Use your DNSPod account email, use double quoted "ID,Token" as api_token:
 
 ```ini
-certbot_dns_dnspod:dns_dnspod_api_id = 12345
-certbot_dns_dnspod:dns_dnspod_api_token = 1234567890abcdef1234567890abcdef
+dns_dnspod_email = someone@example.com
+dns_dnspod_api_token = "12345,abcdef1234567890abcdef"
 ```
 
 ```bash
@@ -38,8 +39,8 @@ chmod 600 /path/to/credentials.ini
 ## Obtain Certificates
 
 ```bash
-certbot certonly -a certbot-dns-dnspod:dns-dnspod \
-    --certbot-dns-dnspod:dns-dnspod-credentials /path/to/credentials.ini \
+certbot certonly -a dns-dnspod \
+    --dns-dnspod-credentials /path/to/credentials.ini \
     -d example.com \
     -d "*.example.com"
 ```
