@@ -19,8 +19,8 @@ sudo snap connect certbot:plugin certbot-dns-dnspod
 ## Credentials File
 
 ```ini
-certbot_dns_dnspod:dns_dnspod_api_id = 12345
-certbot_dns_dnspod:dns_dnspod_api_token = 1234567890abcdef1234567890abcdef
+dns_dnspod_api_id = 12345
+dns_dnspod_api_token = 1234567890abcdef1234567890abcdef
 ```
 
 ```bash
@@ -31,8 +31,8 @@ chmod 600 /path/to/credentials.ini
 ## Obtain Certificates
 
 ```bash
-certbot certonly -a certbot-dns-dnspod:dns-dnspod \
-    --certbot-dns-dnspod:dns-dnspod-credentials /path/to/credentials.ini \
+certbot certonly -a dns-dnspod \
+    --dns-dnspod-credentials /path/to/credentials.ini \
     -d example.com \
     -d "*.example.com"
 ```
