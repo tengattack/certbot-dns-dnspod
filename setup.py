@@ -10,7 +10,7 @@ version = '0.24.1'
 # acme/certbot version.
 install_requires = [
     'acme>=0.21.1',
-    'certbot>=0.21.1',
+    # 'certbot>=0.21.1',
     'dns-lexicon',
     'mock',
     'setuptools',
