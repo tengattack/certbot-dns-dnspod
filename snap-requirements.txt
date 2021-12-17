@@ -1,0 +1,5 @@
+acme>=0.21.1
+dns-lexicon
+mock
+setuptools
+zope.interface
