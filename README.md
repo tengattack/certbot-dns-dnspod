@@ -2,13 +2,18 @@
 
 A certbot dns plugin to obtain certificates using dnspod.
 
-This repo contains a slightly modified version of this plugin for use with Snap.
-
 ## Obtain API Token
 [https://www.dnspod.cn/console/user/security](https://www.dnspod.cn/console/user/security)
 
-
 ## Install
+
+Pip:
+
+```bash
+sudo pip install git+https://github.com/tengattack/certbot-dns-dnspod.git
+```
+
+Snap:
 
 ```bash
 sudo snap install certbot-dns-dnspod
