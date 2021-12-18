@@ -1,6 +1,6 @@
 name: certbot-dns-dnspod
 summary: DNSPod DNS Authenticator plugin for Certbot
-version: '0.24.1-1'
+version: '0.24.1'
 description: A certbot dns plugin to obtain certificates using dnspod. For information on how to set up, go to the GitHub page.
 website: https://github.com/ericzhang456/certbot-dns-dnspod # TODO (after merge): change url to https://github.com/tengattack/certbot-dns-dnspod 
 license: Apache-2.0
