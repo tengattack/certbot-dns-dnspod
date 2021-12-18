@@ -8,7 +8,9 @@ confinement: strict
 grade: stable
 base: core20
 adopt-info: certbot-dns-dnspod
-
+architectures:
+  - build-on: arm64
+  - build-on: amd64
 parts:
   certbot-dns-dnspod:
     plugin: python
