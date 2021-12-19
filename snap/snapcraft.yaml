@@ -1,0 +1,52 @@
+name: certbot-dns-dnspod
+summary: DNSPod DNS Authenticator plugin for Certbot
+version: '0.24.1'
+description: A certbot dns plugin to obtain certificates using dnspod. For information on how to set up, go to the GitHub page.
+website: https://github.com/ericzhang456/certbot-dns-dnspod # TODO (after merge): change url to https://github.com/tengattack/certbot-dns-dnspod 
+license: Apache-2.0
+confinement: strict
+grade: stable
+base: core20
+adopt-info: certbot-dns-dnspod
+architectures:
+  - build-on: arm64
+  - build-on: amd64
+parts:
+  certbot-dns-dnspod:
+    plugin: python
+    source: .
+    override-pull: |
+        snapcraftctl pull
+        snapcraftctl set-version `grep ^version $SNAPCRAFT_PART_SRC/setup.py | cut -f2 -d= | tr -d "'[:space:]"`
+    build-environment:
+      - PIP_CONSTRAINT: $SNAPCRAFT_PART_SRC/snap-constraints.txt
+      - SNAP_BUILD: "True" 
+    requirements: 
+      - snap-requirements.txt
+    build-packages:
+      - gcc
+      - git
+      - build-essential
+      - libssl-dev
+      - libffi-dev
+      - python3-dev
+  certbot-metadata:
+    plugin: dump
+    source: .
+    stage: [setup.py, certbot-shared]
+    override-pull: |
+        snapcraftctl pull
+        mkdir -p $SNAPCRAFT_PART_SRC/certbot-shared
+
+slots:
+  certbot:
+    interface: content
+    content: certbot-1
+    read:
+      - $SNAP/lib/python3.8/site-packages
+
+plugs:
+  certbot-metadata:
+    interface: content
+    content: metadata-1
+    target: $SNAP/certbot-shared

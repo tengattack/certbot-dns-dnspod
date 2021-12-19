@@ -2,32 +2,30 @@
 
 A certbot dns plugin to obtain certificates using dnspod.
 
-
 ## Obtain API Token
 [https://www.dnspod.cn/console/user/security](https://www.dnspod.cn/console/user/security)
 
-
 ## Install
 
+Pip:
+
 ```bash
-git clone https://github.com/tengattack/certbot-dns-dnspod
-cd certbot-dns-dnspod
-sudo python setup.py install
+sudo pip install git+https://github.com/tengattack/certbot-dns-dnspod.git
 ```
 
-If you are using `certbot-auto`, you should run `virtualenv` first:
+Snap:
 
 ```bash
-# CentOS 7
-virtualenv --no-site-packages --python "python2.7" "/opt/eff.org/certbot/venv"
-/opt/eff.org/certbot/venv/bin/python2.7 setup.py install
+sudo snap install certbot-dns-dnspod
+sudo snap set certbot trust-plugin-with-root=ok
+sudo snap connect certbot:plugin certbot-dns-dnspod
 ```
 
 ## Credentials File
 
 ```ini
-certbot_dns_dnspod:dns_dnspod_api_id = 12345
-certbot_dns_dnspod:dns_dnspod_api_token = 1234567890abcdef1234567890abcdef
+dns_dnspod_api_id = 12345
+dns_dnspod_api_token = 1234567890abcdef1234567890abcdef
 ```
 
 ```bash
@@ -38,8 +36,8 @@ chmod 600 /path/to/credentials.ini
 ## Obtain Certificates
 
 ```bash
-certbot certonly -a certbot-dns-dnspod:dns-dnspod \
-    --certbot-dns-dnspod:dns-dnspod-credentials /path/to/credentials.ini \
+certbot certonly -a dns-dnspod \
+    --dns-dnspod-credentials /path/to/credentials.ini \
     -d example.com \
     -d "*.example.com"
 ```
