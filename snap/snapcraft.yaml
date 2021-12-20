@@ -2,7 +2,7 @@ name: certbot-dns-dnspod
 summary: DNSPod DNS Authenticator plugin for Certbot
 version: '0.24.1'
 description: A certbot dns plugin to obtain certificates using dnspod. For information on how to set up, go to the GitHub page.
-website: https://github.com/ericzhang456/certbot-dns-dnspod # TODO (after merge): change url to https://github.com/tengattack/certbot-dns-dnspod 
+website: https://github.com/tengattack/certbot-dns-dnspod
 license: Apache-2.0
 confinement: strict
 grade: stable
@@ -20,8 +20,8 @@ parts:
         snapcraftctl set-version `grep ^version $SNAPCRAFT_PART_SRC/setup.py | cut -f2 -d= | tr -d "'[:space:]"`
     build-environment:
       - PIP_CONSTRAINT: $SNAPCRAFT_PART_SRC/snap-constraints.txt
-      - SNAP_BUILD: "True" 
-    requirements: 
+      - SNAP_BUILD: "True"
+    requirements:
       - snap-requirements.txt
     build-packages:
       - gcc
