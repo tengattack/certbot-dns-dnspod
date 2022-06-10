@@ -1,13 +1,10 @@
 """DNS Authenticator for DNSPod DNS."""
 import logging
 
-import zope.interface
-
 from requests.exceptions import HTTPError
 from lexicon.providers import dnspod
 
 from certbot import errors
-from certbot import interfaces
 from certbot.plugins import dns_common
 from certbot.plugins import dns_common_lexicon
 
@@ -16,8 +13,6 @@ logger = logging.getLogger(__name__)
 ACCOUNT_URL = 'https://www.dnspod.cn/console/user/security'
 
 
-@zope.interface.implementer(interfaces.IAuthenticator)
-@zope.interface.provider(interfaces.IPluginFactory)
 class Authenticator(dns_common.DNSAuthenticator):
     """DNS Authenticator for DNSPod DNS
 
